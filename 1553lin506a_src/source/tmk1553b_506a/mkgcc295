@@ -1,0 +1,8 @@
+#
+# for use with gcc 2.95.x
+# example: ./mkgcc295 ./make24u
+#
+mv tmknll.c tmknll.cc
+dos2unix <tmknll.cc >tmknll.c
+$1
+mv tmknll.cc tmknll.c

@@ -1,0 +1,4 @@
+rm -f Makefile
+ln Makefile26x Makefile
+CFLAGS_TMK1553B="-DTMK1553B_TWOARGACCOK" make -C /lib/modules/`uname -r`/build M=$PWD modules CC=/usr/lib/gcc/gcc-4.8.5/bin/gcc
+rm -f -r -v Makefile Module.markers Module.symvers Modules.symvers modules.order .tmp_versions .cache.mk .*.cmd *.o *.o.* *.mod.c *.mod tmk1553.ko tmklllin.ko >/dev/null

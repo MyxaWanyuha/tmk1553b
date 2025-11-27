@@ -1,0 +1,4 @@
+rm -f Makefile
+ln Makefile26t_32 Makefile
+make -C /lib/modules/`uname -r`/build M=$PWD modules
+rm -f -r -v Makefile Module.symvers modules.order .tmp_versions .cache.mk .*.cmd *.o *.o.* *.mod.c *.mod tmk1553.ko tmklllin.ko

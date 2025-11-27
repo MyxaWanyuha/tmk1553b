@@ -1,0 +1,2 @@
+make -f Makefile24 'KERNELDIR=/usr/src/linux-$(shell uname -r)' tmk1553b.ko
+rm -v *.o

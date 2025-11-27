@@ -1,0 +1,44 @@
+# Comment/uncomment the following line to disable/enable debugging
+#DEBUG = y
+
+
+# This Makefile has been simplified as much as possible, by putting all
+# generic material, independent of this specific directory, into
+# Rules.make. Read that file for details
+
+include Rules.make
+
+# Add your debugging flag (or not) to CFLAGS
+ifeq ($(DEBUG),y)
+  DEBFLAGS = -O -g -DTMK1553B_DEBUG # "-O" is needed to expand inlines
+else
+  DEBFLAGS = -O2
+endif
+
+CFLAGS += $(DEBFLAGS)
+CFLAGS += -I.. -DTMK1553B_THREADS
+
+TARGET = tmk1553b.ko
+OBJS = tmk1553.o tmklllin.o
+SRC = tmk1553.c tmklllin.c
+
+all: .depend $(TARGET)
+
+
+$(TARGET): $(SRC:.c=.o)
+	$(LD) -r $^ -o $@
+
+install:
+	install -d $(INSTALLDIR)
+	install -c $(TARGET) $(INSTALLDIR)
+
+clean:
+	rm -f *.o *~ core .depend
+
+depend .depend dep:
+	$(CC) $(CFLAGS) -M *.c > $@
+
+
+ifeq (.depend,$(wildcard .depend))
+include .depend
+endif
