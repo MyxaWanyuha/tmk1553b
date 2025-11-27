@@ -1463,11 +1463,15 @@ static unsigned int tmk1553b_poll(struct file *filp, poll_table *pollp)
     if (!fEvents)
     {
 #if LINUX_VERSION_CODE >= KERNEL_VERSION(3,4,0)
-      if (poll_does_not_wait(pollp))
-      {
-        memset(hlnProc->maskEvents, 0, sizeof(hlnProc->maskEvents));
-      }
-      else
+  #if LINUX_VERSION_CODE >= KERNEL_VERSION(4,13,0)
+  if (poll_requested_events(pollp) == 0)
+  #else
+  if (poll_does_not_wait(pollp))
+  #endif
+  {
+    memset(hlnProc->maskEvents, 0, sizeof(hlnProc->maskEvents));
+  }
+  else
 #endif
       {
         poll_wait(filp, &(hlnProc->wq), pollp);
