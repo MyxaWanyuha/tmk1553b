@@ -1,5 +1,5 @@
 //;***************************************************************************;
-//;*      TMKNLL v8.06.1                                                     *;
+//;*      TMKNLL v8.06.1a                                                    *;
 //;*      - for TMKLL4.OBJ v8.06 for DOS.                                    *;
 //;*      - for TMKLL4P.OBJ v8.06 for DPMI.                                  *;
 //;*      - for TMK1553B.SYS v5.06 for Windows NT4.                          *;
@@ -7,7 +7,7 @@
 //;*      - for TMK1553B v5.06 for Linux.                                    *;
 //;*      - for TMK1553B v5.06 for QNX4.                                     *;
 //;*      - for TMK1553B v5.06 for QNX6.                                     *;
-//;*      ELCUS, 1995,2024.                                                  *;
+//;*      ELCUS, 1995,2025.                                                  *;
 //;***************************************************************************;
 //6.00
 // - ASM->C
@@ -314,6 +314,8 @@
 // - add TA_MSGA reg clear for TA in bcreset
 //8.06.1
 // - add fallthrough macros along with fall-through comments as gcc settings changed in LINUX (8.07)
+//8.06.1a
+// - fix DIRQLTmksInt1 for MRTAI wrong virtual RT interrupt bug in SABUF_HEAP mode (8.07)
 
 #ifndef NOT_INCLUDE_DEFS
 #include "tmkndefs.h"
@@ -17774,7 +17776,7 @@ unsigned DIRQLTmksInt1(int hTMK, void *pEvData)
           {
             if (__rtAddress[irt] != 0x00FF)
             {
-              if ((unsigned)(msgBase - __rtSABufExt[irt][sa] + 1) <  (unsigned)(__rtSABufSize[irt][sa]))
+              if ((unsigned)(msgBase - __rtSABufExt[irt][sa]) <  (unsigned)(__rtSABufSize[irt][sa] - 1))
               {
                 pevd[4] = irt;
                 pevd[5] = (msgBase - __rtSABufExt[irt][sa] + 1) << 5;

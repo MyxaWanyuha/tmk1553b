@@ -1,5 +1,5 @@
 /*
- * tmk1553b.c -- the tmk1553b v5.06a char module. (c) ELCUS, 2002,2024.
+ * tmk1553b.c -- the tmk1553b v5.06a1 char module. (c) ELCUS, 2002,2025.
  *
  * Part of this code comes from the book "Linux Device Drivers"
  * by Alessandro Rubini and Jonathan Corbet, published
@@ -9,9 +9,9 @@
 #define TMK_VER_HI 5
 #define TMK_VER_LO 06
 #ifdef TMK1553B_THREADS
-#define TMK_VERSION "5.06a-t1"
+#define TMK_VERSION "5.06a1-t1"
 #else
-#define TMK_VERSION "5.06a-t0"
+#define TMK_VERSION "5.06a1-t0"
 #endif
 
 #ifndef __KERNEL__
@@ -3512,7 +3512,7 @@ static int tmk1553b_init_module(void)
   printk(MY_KERN_DEBUG "Tmk1553b: All initialized!\n");
   #endif
 
-  for (iTMK = nMaxTmkNumber; iTMK >= 0; --iTMK)
+  for (iTMK = MAX_TMK_NUMBER; iTMK >= 0; --iTMK)
   {
     if (aTmkConfig[iTMK].nType >= 0)
       break;
